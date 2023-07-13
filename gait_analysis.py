@@ -11,21 +11,42 @@ for idx in range(frame_count):
     foot_contacts.append(temp[idx][0])
 
 left_heel_strikes = []
-
-for idx in range(frame_count):
-    if foot_contacts[idx][0] == 1:
-        continue
-    left_heel_strikes.append(idx)
+i = 1
+for i in range(frame_count):
+    if foot_contacts[i-1][0] - foot_contacts[i][0] == -1:
+        left_heel_strikes.append(i)
 
 right_heel_strikes = []
 
-for idx in range(frame_count):
-    if foot_contacts[idx][3] == 1:
-        continue
-    right_heel_strikes.append(idx)
-fig = plt.figure(0)
-fig.subplots(1, 1, 1)
-plt.plot(right_heel_strikes)
-fig.subplots(1, 2, 0)
-plt.plot(left_heel_strikes)
-plt.show()
+ix = 1
+for ix in range(frame_count):
+    if foot_contacts[ix-1][3] - foot_contacts[ix][3] == -1:
+        right_heel_strikes.append(ix)
+
+def get_joint(RjointIndex, LjointIndex, rList, lList):
+    for i in range(frame_count):
+        rList.append(data.get_joint_angle(RjointIndex)[i])
+        lList.append(data.get_joint_angle(LjointIndex)[i])
+
+right_knee = []
+left_knee = []
+
+get_joint(15, 19, right_knee, left_knee)
+
+print(right_knee)
+
+
+#Plotting 
+"""plt.subplot(2,1,1)
+plt.title("Left Knee Angles")
+plt.plot([], label=("x", "y", "z"), marker="*")
+plt.xlim(0,len(left_heel_strikes))
+plt.legend()
+
+plt.subplot(2,1,2)
+plt.title("Right Knee Angles")
+plt.plot([], label=("x", "y", "z"), marker="*")
+plt.xlim(0, len(left_heel_strikes))
+plt.legend()
+
+plt.show()"""

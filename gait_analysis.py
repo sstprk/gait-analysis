@@ -1,6 +1,7 @@
 from load_mvnx import load_mvnx
 import matplotlib.pyplot as plt
 
+#A class for lists
 class lists:
     foot_contacts = []
     left_heel_strikes = []
@@ -14,6 +15,7 @@ class lists:
     yright_gait_cycles = []
     zright_gait_cycles = []
 
+#Importing the walking data
 data = load_mvnx(r"C:\Users\stcr3\Desktop\Data\baran_walking-001.mvnx")
 frame_count = data.frame_count
 temp = []
@@ -22,6 +24,7 @@ for idx in range(frame_count):
     temp.append(data.get_foot_contacts(frame=idx))
     lists.foot_contacts.append(temp[idx][0])
 
+#Determinating the heel strikes for each foot
 i = 1
 for i in range(frame_count):
     if lists.foot_contacts[i-1][0] - lists.foot_contacts[i][0] == -1:
@@ -32,12 +35,13 @@ for ix in range(frame_count):
     if lists.foot_contacts[ix-1][3] - lists.foot_contacts[ix][3] == -1:
         lists.right_heel_strikes.append(ix)
 
+#A function for reading the joint data
 def get_joint(RjointIndex, LjointIndex, rList, lList):
     for i in range(frame_count):
         rList.append(data.get_joint_angle(RjointIndex)[i])
         lList.append(data.get_joint_angle(LjointIndex)[i])
 
-
+#Seperating each axis of cycles with a function 
 def organise_joint(rList, lList):
     j = 1
     for j in range(len(lists.left_heel_strikes)):
@@ -53,8 +57,6 @@ def organise_joint(rList, lList):
         lists.xleft_gait_cycles.append(ltempListx)
         lists.yleft_gait_cycles.append(ltempListy)
         lists.zleft_gait_cycles.append(ltempListz)
-
-
 
     k = 1
     for k in range(len(lists.right_heel_strikes)):
@@ -74,7 +76,7 @@ def organise_joint(rList, lList):
 get_joint(15, 19, lists.right_knee, lists.left_knee)
 organise_joint(lists.right_knee, lists.left_knee)
 
-#Plotting   
+#Plotting the final data   
 fig = plt.figure()
 for i in range(len(lists.left_heel_strikes)): 
     plt.autumn()

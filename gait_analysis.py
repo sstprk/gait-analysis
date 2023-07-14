@@ -7,8 +7,12 @@ class lists:
     right_heel_strikes = []
     right_knee = []
     left_knee = []
-    left_gait_cycles = []
-    right_gait_cycles = []
+    xleft_gait_cycles = []
+    yleft_gait_cycles = []
+    zleft_gait_cycles = []
+    xright_gait_cycles = []
+    yright_gait_cycles = []
+    zright_gait_cycles = []
 
 data = load_mvnx(r"C:\Users\stcr3\Desktop\Data\baran_walking-001.mvnx")
 frame_count = data.frame_count
@@ -29,32 +33,72 @@ for ix in range(frame_count):
         lists.right_heel_strikes.append(ix)
 
 def get_joint(RjointIndex, LjointIndex, rList, lList):
-    for i in range(len(lists.right_heel_strikes)):
-        rList.append(data.get_joint_angle(RjointIndex)[lists.right_heel_strikes[i]])
-    for i in range(len(lists.left_heel_strikes)):
-        lList.append(data.get_joint_angle(LjointIndex)[lists.left_heel_strikes[i]])
+    for i in range(frame_count):
+        rList.append(data.get_joint_angle(RjointIndex)[i])
+        lList.append(data.get_joint_angle(LjointIndex)[i])
+
+
+def organise_joint(rList, lList):
+    j = 1
+    for j in range(len(lists.left_heel_strikes)):
+        ltempListx = []
+        ltempListy = []
+        ltempListz = []
+        for x in range(lists.left_heel_strikes[j-1], lists.left_heel_strikes[j]):
+            if lists.left_heel_strikes[j] == 0:
+                continue
+            ltempListx.append(lList[x][0])
+            ltempListy.append(lList[x][1])
+            ltempListz.append(lList[x][2])
+        lists.xleft_gait_cycles.append(ltempListx)
+        lists.yleft_gait_cycles.append(ltempListy)
+        lists.zleft_gait_cycles.append(ltempListz)
+
+
+
+    k = 1
+    for k in range(len(lists.right_heel_strikes)):
+        rtempListx = []
+        rtempListy = []
+        rtempListz = []
+        for y in range(lists.right_heel_strikes[k-1], lists.right_heel_strikes[k]):
+            if lists.right_heel_strikes[k] == 0:
+                continue
+            rtempListx.append(rList[y][0])
+            rtempListy.append(rList[y][1])
+            rtempListz.append(rList[y][2])
+        lists.xright_gait_cycles.append(rtempListx)
+        lists.yright_gait_cycles.append(rtempListy)
+        lists.zright_gait_cycles.append(rtempListz)
 
 get_joint(15, 19, lists.right_knee, lists.left_knee)
-
-j = 1
-for j in range(len(lists.left_heel_strikes)):
-    diff = lists.left_knee[j] - lists.left_knee[j-1]
-    lists.left_gait_cycles.append(diff)
-
-k = 1
-for k in range(len(lists.right_heel_strikes)):
-    diff = lists.right_knee[k] - lists.right_knee[k-1] 
-    lists.right_gait_cycles.append(diff)
+organise_joint(lists.right_knee, lists.left_knee)
 
 #Plotting   
+fig = plt.figure()
 for i in range(len(lists.left_heel_strikes)): 
-    plt.subplot(1,2,1)
-    plt.title("Left Knee Flexion/Extension")
-    plt.plot(lists.left_gait_cycles[i])
+    plt.autumn()
+    plt.subplot(3,2,1)
+    plt.plot(lists.xleft_gait_cycles[i])
 
 for i in range(len(lists.right_heel_strikes)):
-    plt.subplot(1,2,2)
-    plt.title("Right Knee Flexion/Extension")
-    plt.plot(lists.right_gait_cycles[i])
+    plt.subplot(3,2,2)
+    plt.plot(lists.xright_gait_cycles[i])
 
+for i in range(len(lists.left_heel_strikes)):
+    plt.subplot(3,2,3)
+    plt.plot(lists.yleft_gait_cycles[i])
+
+for i in range(len(lists.right_heel_strikes)):
+    plt.subplot(3,2,4)
+    plt.plot(lists.yright_gait_cycles[i])
+
+for i in range(len(lists.left_heel_strikes)):
+    plt.subplot(3,2,5)
+    plt.plot(lists.zleft_gait_cycles[i])
+
+for i in range(len(lists.right_heel_strikes)):
+    plt.subplot(3,2,6)
+    plt.plot(lists.zright_gait_cycles[i])
+plt.suptitle("Knee Flexion/Extension")
 plt.show()

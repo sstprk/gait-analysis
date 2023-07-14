@@ -6,8 +6,8 @@ class lists:
     foot_contacts = []
     left_heel_strikes = []
     right_heel_strikes = []
-    right_knee = []
-    left_knee = []
+    right_joint = []
+    left_joint = []
     xleft_gait_cycles = []
     yleft_gait_cycles = []
     zleft_gait_cycles = []
@@ -73,8 +73,8 @@ def organise_joint(rList, lList):
         lists.yright_gait_cycles.append(rtempListy)
         lists.zright_gait_cycles.append(rtempListz)
 
-get_joint(15, 19, lists.right_knee, lists.left_knee)
-organise_joint(lists.right_knee, lists.left_knee)
+get_joint(16, 20, lists.right_joint, lists.left_joint)
+organise_joint(lists.right_joint, lists.left_joint)
 
 #Plotting the final data   
 fig = plt.figure()

@@ -73,7 +73,7 @@ def organise_joint(rList, lList):
         lists.yright_gait_cycles.append(rtempListy)
         lists.zright_gait_cycles.append(rtempListz)
 
-get_joint(16, 20, lists.right_joint, lists.left_joint)
+get_joint(15, 15, lists.right_joint, lists.left_joint)
 organise_joint(lists.right_joint, lists.left_joint)
 
 #Plotting the final data   

@@ -16,7 +16,7 @@ class lists:
     zright_gait_cycles = []
 
 #Importing the walking data
-data = load_mvnx(r"C:\Users\stcr3\Desktop\Data\baran_walking-001.mvnx")
+data = load_mvnx(r"C:\Users\stcr3\Desktop\Data\5kmhr-001.mvnx")
 frame_count = data.frame_count
 temp = []
 
@@ -73,7 +73,7 @@ def organise_joint(rList, lList):
         lists.yright_gait_cycles.append(rtempListy)
         lists.zright_gait_cycles.append(rtempListz)
 
-get_joint(15, 15, lists.right_joint, lists.left_joint)
+get_joint(15, 19, lists.right_joint, lists.left_joint)
 organise_joint(lists.right_joint, lists.left_joint)
 
 #Plotting the final data   

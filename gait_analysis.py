@@ -16,7 +16,7 @@ class lists:
     zright_gait_cycles = []
 
 #Importing the walking data
-data = load_mvnx(r"C:\Users\stcr3\Desktop\Data\5kmhr-001.mvnx")
+data = load_mvnx(r"C:\Users\stcr3\Desktop\Data\baran_walking-001.mvnx")
 frame_count = data.frame_count
 temp = []
 
@@ -76,7 +76,7 @@ def organise_joint(rList, lList):
 get_joint(15, 19, lists.right_joint, lists.left_joint)
 organise_joint(lists.right_joint, lists.left_joint)
 
-#Plotting the final data   
+"""#Plotting the final data   
 fig = plt.figure()
 for i in range(len(lists.left_heel_strikes)): 
     plt.autumn()
@@ -104,3 +104,5 @@ for i in range(len(lists.right_heel_strikes)):
     plt.plot(lists.zright_gait_cycles[i])
 plt.suptitle("Knee Flexion/Extension")
 plt.show()
+"""
+print(lists.right_heel_strikes)
